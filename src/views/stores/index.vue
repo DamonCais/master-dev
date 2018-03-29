@@ -1,5 +1,8 @@
 <template>
 <div class="table">
+    <el-card class="box-card">
+        <my-form :forms="forms" :edit="true" @onSubmit="onSubmit"/>
+    </el-card>
   <el-table
     :data="tableData"
     style="width: 100%"
@@ -92,6 +95,10 @@
 </template>
 
 <style scoped>
+
+  .box-card{
+    margin:20px 0;
+  }
   .demo-table-expand {
     font-size: 0;
   }
@@ -116,16 +123,28 @@
 </style>
 
 <script>
+import myForm from '@/base/myForm'
 import { getShopList } from '@/api/table'
   export default {
     data() {
       return {
         listQuery:{
-          filters:{},
-          page:1,
-          pageSize:10,
-          sort:"-createdAt"
         },
+        forms: [
+          [{ value: "", label: "Store Name", span: 12, type: "input" ,key:"storeName"},          
+          {
+              key:"status",
+              value: "All",
+              label: "status",
+              span: 12,
+              type: "select",
+              options: [
+                { label: "All", value: 'All' },
+                { label: "unverified", value: 'unverified' },
+                { label: "verified", value: 'verified' }
+              ]
+            }],
+        ],
         listLoading: true,
         tableData:[],
         currentPage:1,
@@ -136,8 +155,23 @@ import { getShopList } from '@/api/table'
     this.fetchData()
   },
   methods: {
+    onSubmit(val){
+      console.log(val)
+
+    },
+    search(form) {
+      if (form.archivedStatus != undefined) {
+        this.listQuery["filters"].isArchived = form.archivedStatus
+          ? form.archivedStatus
+          : {
+              $ne: true
+            };
+      } else {
+        this.listQuery["filters"]=form;
+      }
+      this.fetchData();
+    },
     sortChange(val){
-      console.log(val.prop);
       this.listQuery['sort'] = val.order==='descending'?'-'+val.prop:val.prop;
       this.currentPage = 1;
       this.fetchData();
@@ -146,9 +180,7 @@ import { getShopList } from '@/api/table'
       this.listLoading = true;
       this.tableData = [];
       getShopList(this.listQuery).then(response => {
-
         this.tableData = response.data.results;
-        console.log(this.tableData);
         this.total = response.data.total;
         this.listLoading = false;
       })
@@ -159,8 +191,6 @@ import { getShopList } from '@/api/table'
       this.fetchData();
     },
     getPer(value){
-      console.log(value);
-
     },
     getShopById(id){
       this.$router.push({ path: `/shop/${id}` })
@@ -169,8 +199,10 @@ import { getShopList } from '@/api/table'
       return row.status === value;
     },
     handleClick(e){
-      console.log(e);
     }
+  },
+  components:{
+    myForm,
   }
 }
 </script>

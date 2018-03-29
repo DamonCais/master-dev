@@ -5,21 +5,13 @@
     class="table"
     :data="tableData"
     height="650">
-    <!-- 表格内容, showData 是传入的将要显示的内容 -->
     <el-table-column
-      v-for="(item,index) in showData"
-      :key="index"
+      v-for="item in showData"
+      :key="item.id"
       :sortable="item.sortable"
+      :prop="item.prop"
       :label="item.label"
-      >
-      <template slot-scope="scope">
-        <div >
-          <!-- 支持三种格式：1.String,2.Image,3.button 其中deepGet是实现lodash的get方法的filter-->
-          <img v-if="item.type ==='image'" :src="scope.row|deepGet(item.prop)" alt="" style="width: 50px;height: 50px">
-          <span v-if="item.type ==='string'">{{scope.row|deepGet(item.prop)}}</span>
-          <el-button v-if="item.type ==='button'" @click="toUrl(item.url + scope.row._id)">{{item.prop}}</el-button>
-        </div>
-      </template>
+      :width="item.width">
     </el-table-column>
   </el-table>
   </div>
