@@ -1,14 +1,3 @@
-import request from '@/utils/request'
-
-export function getList(params) {
-  return request({
-    url: '/table/list',
-    method: 'get',
-    params
-  })
-}
-
-// ================for guzzu========
 import gRequest from '@/utils/gRequest'
 
 export function getShopList(params) {
@@ -26,5 +15,21 @@ export function getShopById(id) {
     data: {
       storeId: id
     }
+  })
+}
+
+export function getOrderList(params) {
+  return gRequest({
+    url: '/Order.find',
+    method: 'post',
+    data: params
+  })
+}
+
+export function doPost(url, params) {
+  return gRequest({
+    url: url,
+    method: 'post',
+    data: params
   })
 }

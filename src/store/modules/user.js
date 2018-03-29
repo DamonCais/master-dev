@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout, guzzuLogin } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -31,6 +31,7 @@ const user = {
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
           const data = response.data
+
           setToken(data.token)
           commit('SET_TOKEN', data.token)
           resolve()
@@ -43,15 +44,42 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.roles)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
+        // 获取用户信息
+        // getInfo(state.token).then(response => {
+        // var response = {
+        //     "code": 20000,
+        //     "data": {
+        //         "roles": [
+        //             "admin"
+        //         ],
+        //         "role": [
+        //             "admin"
+        //         ],
+        //         "name": "admin",
+        //         "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+        //     }
+        // }
+        var response = {
+          'code': 20000,
+          'data': {
+            'roles': [
+              'editor'
+            ],
+            'role': [
+              'editor'
+            ],
+            'name': 'editor',
+            'avatar': 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+          }
+        }
+        const data = response.data
+        commit('SET_ROLES', data.roles)
+        commit('SET_NAME', data.name)
+        commit('SET_AVATAR', data.avatar)
+        resolve(response)
+        // }).catch(error => {
+        //     reject(error)
+        // })
       })
     },
 
@@ -75,6 +103,20 @@ const user = {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
+      })
+    },
+    // ===========for guzzu==========
+    GuzzuLogin({ commit }, userInfo) {
+      const username = userInfo.username.trim()
+      return new Promise((resolve, reject) => {
+        guzzuLogin(username, userInfo.password).then(response => {
+          const data = { token: 'editor' }
+          setToken(data.token)
+          commit('SET_TOKEN', data.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       })
     }
   }

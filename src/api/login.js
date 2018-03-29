@@ -25,3 +25,17 @@ export function logout() {
     method: 'post'
   })
 }
+// ==================for guzzu===============
+import gRequest from '@/utils/gRequest'
+
+export function guzzuLogin(username, password) {
+  return gRequest({
+    url: '/Auth.signin',
+    method: 'post',
+    data: {
+      'clientType': 'master.guzzu.cn',
+      'login': username,
+      'password': password
+    }
+  })
+}

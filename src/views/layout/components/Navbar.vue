@@ -2,6 +2,8 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
+
+    <lang-select class="international"></lang-select>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
@@ -25,11 +27,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import LangSelect from '@/components/LangSelect'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    LangSelect
   },
   computed: {
     ...mapGetters([
@@ -39,7 +43,7 @@ export default {
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
+      this.$store.dispatch('toggleSideBar')
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
@@ -60,6 +64,14 @@ export default {
     height: 50px;
     float: left;
     padding: 0 10px;
+  }
+  .international{
+    position: absolute;
+    right:90px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 8px;
+    height: 100%;
   }
   .screenfull {
     position: absolute;

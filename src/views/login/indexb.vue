@@ -52,8 +52,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'damon@guzzu.com',
-        password: '321welcome'
+        username: 'admin',
+        password: 'admin'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -75,7 +75,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('GuzzuLogin', this.loginForm).then(() => {
+          this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: '/' })
           }).catch(() => {

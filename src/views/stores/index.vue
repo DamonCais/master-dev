@@ -50,11 +50,6 @@
       label="余额"
       prop="balance"
       >
-      <template slot-scope="scope">
-        <div type="text" size="small">
-            <span style="display:block">{{scope.row['balance']}}</span>
-        </div>
-      </template>
     </el-table-column>
     <el-table-column
     sortable='custom'
@@ -73,11 +68,6 @@
     sortable='custom'
       label="创建时间"
       prop="createdAt">
-      <template slot-scope="scope">
-        <div type="text" size="small">
-            <span style="display:block">{{scope.row['createdAt']}}</span>
-        </div>
-      </template>
     </el-table-column>
     <el-table-column
     sortable='custom'
@@ -119,8 +109,9 @@
     float: right;
   }
   .table{
-    margin:20px;
-    border:1px solid black;
+    padding: 16px 24px;
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(250,250,250);
   }
 </style>
 
@@ -146,6 +137,7 @@ import { getShopList } from '@/api/table'
   },
   methods: {
     sortChange(val){
+      console.log(val.prop);
       this.listQuery['sort'] = val.order==='descending'?'-'+val.prop:val.prop;
       this.currentPage = 1;
       this.fetchData();
@@ -154,8 +146,9 @@ import { getShopList } from '@/api/table'
       this.listLoading = true;
       this.tableData = [];
       getShopList(this.listQuery).then(response => {
-        console.log(typeof(response.data.results[0].createdAt));
+
         this.tableData = response.data.results;
+        console.log(this.tableData);
         this.total = response.data.total;
         this.listLoading = false;
       })
@@ -170,7 +163,7 @@ import { getShopList } from '@/api/table'
 
     },
     getShopById(id){
-      this.$router.push({ path: `/example/shop/${id}` })
+      this.$router.push({ path: `/shop/${id}` })
     },
     filterStatus(value, row) {
       return row.status === value;

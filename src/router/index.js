@@ -21,58 +21,30 @@ import Layout from '../views/layout/Layout'
     icon: 'svg-name'             the icon show in the sidebar,
   }
 **/
-export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
-
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
-    hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  { path: '*', redirect: '/404', hidden: true }
+export const constantRouterMap = [{
+  path: '/login',
+  component: () =>
+            import('@/views/login/index'),
+  hidden: true
+},
+{
+  path: '/404',
+  component: () =>
+            import('@/views/404'),
+  hidden: true
+},
+{
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  name: 'dashboard',
+  hidden: true,
+  children: [{
+    path: 'dashboard',
+    component: () =>
+                import('@/views/dashboard/index')
+  }]
+}
 ]
 
 export default new Router({
@@ -81,3 +53,153 @@ export default new Router({
   routes: constantRouterMap
 })
 
+export const asyncRouterMap = [
+  //   {
+  //   path: '/permission',
+  //   component: Layout,
+  //   redirect: '/permission/index',
+  //   meta: { roles: ['admin'] }, // you can set roles in root nav
+  //   children: [{
+  //     path: 'index',
+  //     component: () =>
+  //                 import('@/views/permission/index'),
+  //     name: 'permission',
+  //     meta: {
+  //       title: 'permission',
+  //       icon: 'form',
+  //       roles: ['admin'] // or you can only set roles in sub nav
+  //     }
+  //   }]
+  // },
+  {
+    path: '/editor',
+    component: Layout,
+    redirect: '/editor/index',
+    meta: { roles: ['editor'] }, // you can set roles in root nav
+    children: [{
+      path: 'index',
+      component: () =>
+                import('@/views/editor/index'),
+      name: 'editor',
+      meta: {
+        title: 'editor',
+        icon: 'form',
+        roles: ['editor'] // or you can only set roles in sub nav
+      }
+    }]
+  },
+
+  {
+    path: '/form',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'form',
+      component: () =>
+                import('@/views/form/index'),
+      meta: { title: 'form', icon: 'form' }
+    }]
+  },
+
+  {
+    path: '/home',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'home',
+      component: () =>
+                import('@/views/home/index'),
+      meta: { title: 'home', icon: 'form' }
+    }]
+  },
+  {
+    path: '/stores',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'stores',
+      component: () =>
+                import('@/views/stores'),
+      meta: { title: 'stores', icon: 'form' }
+    }]
+  },
+  {
+    path: '/shop',
+    component: Layout,
+    name: 'shop',
+    hidden: true,
+    children: [{
+      path: ':id',
+      component: () =>
+                import('@/views/shop'),
+      hidden: true
+    }]
+  },
+  {
+    path: '/pages',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'pages',
+      component: () =>
+                import('@/views/pages/index'),
+      meta: { title: 'pages', icon: 'form' }
+    }]
+  },
+  {
+    path: '/fundTransferRequest',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'fundTransferRequest',
+      component: () =>
+                import('@/views/orders/index'),
+      meta: { title: 'fundTransferRequest', icon: 'form' }
+    }]
+  },
+  {
+    path: '/orders',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'orders',
+      component: () =>
+                import('@/views/orders/index'),
+      meta: { title: 'orders', icon: 'form' }
+    }]
+  },
+  {
+    path: '/statistics',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'statistics',
+      component: () =>
+                import('@/views/statistics/index'),
+      meta: { title: 'statistics', icon: 'form' }
+    }]
+  },
+  {
+    path: '/users',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'users',
+      component: () =>
+                import('@/views/users/index'),
+      meta: { title: 'users', icon: 'form' }
+    }]
+  },
+  {
+    path: '/products',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'products',
+      component: () =>
+                import('@/views/products/index'),
+      meta: { title: 'products', icon: 'form' }
+    }]
+  },
+  { path: '*', redirect: '/404', hidden: true }
+]
